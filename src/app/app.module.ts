@@ -6,26 +6,38 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import { CarrosServiceProvider } from '../providers/carros-service/carros-service';
-import {EscolhaPage} from "../pages/escolha/escolha";
+import { AgendamentoServiceProvider } from '../providers/agendamento-service/agendamento-service';
+import {IonicStorageModule} from "@ionic/storage";
+
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/observable/of';
+import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento-dao';
 
 @NgModule({
     declarations: [
         MyApp,
-        HomePage,
-        EscolhaPage
+        HomePage
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
+        IonicStorageModule.forRoot({
+            name : 'aluracar',
+            storeName : 'agendamentos',
+            driverOrder : ['indexeddb']
+        })
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        HomePage,
-        EscolhaPage
+        HomePage
     ],
     providers: [
         StatusBar,
@@ -34,7 +46,9 @@ import {EscolhaPage} from "../pages/escolha/escolha";
             provide: ErrorHandler,
             useClass: IonicErrorHandler
         },
-        CarrosServiceProvider
+        CarrosServiceProvider,
+        AgendamentoServiceProvider,
+    AgendamentoDaoProvider
     ]
 })
 export class AppModule {}

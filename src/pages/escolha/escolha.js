@@ -9,13 +9,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CadastroPage } from "../cadastro/cadastro";
 var EscolhaPage = (function () {
     function EscolhaPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.carro = this.navParams.get('carroSelecionado');
+        this._precoTotal = this.carro.preco;
+        this.acessorios = [
+            { nome: 'Freio ABS', preco: 800 },
+            { nome: 'Freio ABS', preco: 800 },
+            { nome: 'Freio ABS', preco: 800 },
+        ];
     }
-    EscolhaPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad EscolhaPage');
+    Object.defineProperty(EscolhaPage.prototype, "precoTotal", {
+        get: function () {
+            return this._precoTotal;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    EscolhaPage.prototype.atualizaTotal = function (ativado, acessorio) {
+        ativado ?
+            this._precoTotal += acessorio.preco :
+            this._precoTotal -= acessorio.preco;
+    };
+    EscolhaPage.prototype.avancaCadastro = function () {
+        this.navCtrl.push(CadastroPage.name, {
+            carroSelecionado: this.carro,
+            precoTotal: this._precoTotal
+        });
     };
     return EscolhaPage;
 }());

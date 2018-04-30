@@ -1,5 +1,6 @@
 export interface Carro {
-    nome : String,
-    preco : Number,
+    nome : string,
+    modeloCarro : string,
+    preco : number,
     fotos : string[]
 }

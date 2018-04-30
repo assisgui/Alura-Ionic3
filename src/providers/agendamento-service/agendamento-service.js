@@ -8,20 +8,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
 import { HttpClient } from "@angular/common/http";
-var CarrosServiceProvider = (function () {
-    function CarrosServiceProvider(_http) {
+import { Observable } from "rxjs/Observable";
+var AgendamentoServiceProvider = (function () {
+    function AgendamentoServiceProvider(_http) {
         this._http = _http;
+        this._url = 'http://localhost:8080/api/';
     }
-    CarrosServiceProvider.prototype.lista = function () {
-        return this._http.get('http://localhost:8080/api/carro/listaTodos');
+    AgendamentoServiceProvider.prototype.agenda = function (agendamento) {
+        return this._http
+            .post(this._url + 'agendamento/agenda', agendamento)
+            .do(function () { return agendamento.enviado = true; })
+            .catch(function (err) { return Observable.of(new Error('Falha no agendamento! Tente novamente mais tarde.')); });
     };
-    return CarrosServiceProvider;
+    return AgendamentoServiceProvider;
 }());
-CarrosServiceProvider = __decorate([
+AgendamentoServiceProvider = __decorate([
     Injectable(),
     __metadata("design:paramtypes", [HttpClient])
-], CarrosServiceProvider);
-export { CarrosServiceProvider };
-//# sourceMappingURL=carros-service.js.map
+], AgendamentoServiceProvider);
+export { AgendamentoServiceProvider };
+//# sourceMappingURL=agendamento-service.js.map

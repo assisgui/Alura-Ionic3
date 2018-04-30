@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { AlertController, LoadingController, NavController } from 'ionic-angular';
 import { CarrosServiceProvider } from "../../providers/carros-service/carros-service";
+import { EscolhaPage } from "../escolha/escolha";
 var HomePage = (function () {
     function HomePage(navCtrl, _loadingCtrl, _alertCtrl, _carrosService) {
         this.navCtrl = navCtrl;
@@ -40,7 +41,9 @@ var HomePage = (function () {
         });
     };
     HomePage.prototype.selecionaCarro = function (carro) {
-        console.log(carro);
+        this.navCtrl.push(EscolhaPage.name, {
+            carroSelecionado: carro
+        });
     };
     return HomePage;
 }());

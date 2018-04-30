@@ -6,24 +6,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { EscolhaPage } from './escolha';
-var EscolhaPageModule = (function () {
-    function EscolhaPageModule() {
+import { CadastroPage } from './cadastro';
+var CadastroPageModule = (function () {
+    function CadastroPageModule() {
     }
-    return EscolhaPageModule;
+    return CadastroPageModule;
 }());
-EscolhaPageModule = __decorate([
+CadastroPageModule = __decorate([
     NgModule({
         declarations: [
-            EscolhaPage,
+            CadastroPage,
         ],
         imports: [
-            IonicPageModule.forChild(EscolhaPage),
+            IonicPageModule.forChild(CadastroPage),
         ],
         exports: [
-            EscolhaPage
+            CadastroPage
         ]
     })
-], EscolhaPageModule);
-export { EscolhaPageModule };
-//# sourceMappingURL=escolha.module.js.map
+], CadastroPageModule);
+export { CadastroPageModule };
+//# sourceMappingURL=cadastro.module.js.map
