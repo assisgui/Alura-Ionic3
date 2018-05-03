@@ -27,6 +27,14 @@ var AgendamentoDaoProvider = (function () {
             .then(function (dado) { return dado ? true : false; });
         return Observable.fromPromise(promise);
     };
+    AgendamentoDaoProvider.prototype.listaTodos = function () {
+        var agendamentos = [];
+        var promise = this._storage.forEach(function (agendamento) {
+            agendamentos.push(agendamento);
+        })
+            .then(function () { return agendamentos; });
+        return Observable.fromPromise(promise);
+    };
     return AgendamentoDaoProvider;
 }());
 AgendamentoDaoProvider = __decorate([

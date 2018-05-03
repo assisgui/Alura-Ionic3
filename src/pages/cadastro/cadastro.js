@@ -65,7 +65,7 @@ var CadastroPage = (function () {
         this._agendamentoDao.ehDuplicado(agendamento)
             .mergeMap(function (ehDuplicado) {
             if (ehDuplicado) {
-                throw new Error('Agendamento existente');
+                throw new Error('Agendamento já existente');
             }
             return _this._agendamentoService.agenda(agendamento);
         })
