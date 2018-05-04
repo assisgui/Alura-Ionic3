@@ -10,14 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
+import { ApiServiceProvider } from "../api-service/api-service";
 var AgendamentoServiceProvider = (function () {
-    function AgendamentoServiceProvider(_http) {
+    function AgendamentoServiceProvider(_http, _url) {
         this._http = _http;
-        this._url = 'http://localhost:8080/api/';
+        this._url = _url;
     }
     AgendamentoServiceProvider.prototype.agenda = function (agendamento) {
         return this._http
-            .post(this._url + 'agendamento/agenda', agendamento)
+            .post(this._url.url + 'agendamento/agenda', agendamento)
             .do(function () { return agendamento.enviado = true; })
             .catch(function (err) { return Observable.of(new Error('Falha no agendamento! Tente novamente mais tarde.')); });
     };
@@ -25,7 +26,8 @@ var AgendamentoServiceProvider = (function () {
 }());
 AgendamentoServiceProvider = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [HttpClient])
+    __metadata("design:paramtypes", [HttpClient,
+        ApiServiceProvider])
 ], AgendamentoServiceProvider);
 export { AgendamentoServiceProvider };
 //# sourceMappingURL=agendamento-service.js.map

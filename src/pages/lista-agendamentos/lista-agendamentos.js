@@ -8,20 +8,58 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AgendamentoDaoProvider } from "../../providers/agendamento-dao/agendamento-dao";
+import { AgendamentoServiceProvider } from "../../providers/agendamento-service/agendamento-service";
 var ListaAgendamentosPage = (function () {
-    function ListaAgendamentosPage(navCtrl, navParams, _agendamentoDao) {
+    function ListaAgendamentosPage(navCtrl, navParams, _alertCtrl, _agendamentoService, _agendamentoDao) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this._alertCtrl = _alertCtrl;
+        this._agendamentoService = _agendamentoService;
         this._agendamentoDao = _agendamentoDao;
     }
-    ListaAgendamentosPage.prototype.ionViewLoad = function () {
+    ListaAgendamentosPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this._agendamentoDao.listaTodos()
             .subscribe(function (agendamentos) {
             _this.agendamentos = agendamentos;
         });
+    };
+    ListaAgendamentosPage.prototype.ionViewDidEnter = function () {
+        var _this = this;
+        setTimeout(function () { return _this.atualizaAgendamentos(); }, 5000);
+    };
+    ListaAgendamentosPage.prototype.atualizaAgendamentos = function () {
+        var _this = this;
+        this.agendamentos
+            .filter(function (agendamento) { return agendamento.confirmado; })
+            .forEach(function (agendamento) {
+            agendamento.visualizado = true;
+            _this._agendamentoDao.salva(agendamento);
+        });
+    };
+    ListaAgendamentosPage.prototype.reenvia = function (agendamento) {
+        var _this = this;
+        this._alerta = this._alertCtrl.create({
+            title: 'Aviso',
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+        });
+        var mensagem = '';
+        this._agendamentoService.agenda(agendamento)
+            .mergeMap(function (valor) {
+            var observable = _this._agendamentoDao.salva(agendamento);
+            if (valor instanceof Error) {
+                throw valor;
+            }
+            return observable;
+        })
+            .finally(function () { return _this._alerta.setSubTitle(mensagem).present(); })
+            .subscribe(function () { return mensagem = 'Agendamento Realizado!'; }, function (err) { return mensagem = err.message; });
     };
     return ListaAgendamentosPage;
 }());
@@ -33,6 +71,8 @@ ListaAgendamentosPage = __decorate([
     }),
     __metadata("design:paramtypes", [NavController,
         NavParams,
+        AlertController,
+        AgendamentoServiceProvider,
         AgendamentoDaoProvider])
 ], ListaAgendamentosPage);
 export { ListaAgendamentosPage };

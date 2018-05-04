@@ -10,18 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { HttpClient } from "@angular/common/http";
+import { ApiServiceProvider } from "../api-service/api-service";
 var CarrosServiceProvider = (function () {
-    function CarrosServiceProvider(_http) {
+    function CarrosServiceProvider(_http, _url) {
         this._http = _http;
+        this._url = _url;
     }
     CarrosServiceProvider.prototype.lista = function () {
-        return this._http.get('http://localhost:8080/api/carro/listaTodos');
+        return this._http.get(this._url.url + 'carro/listaTodos');
     };
     return CarrosServiceProvider;
 }());
 CarrosServiceProvider = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [HttpClient])
+    __metadata("design:paramtypes", [HttpClient,
+        ApiServiceProvider])
 ], CarrosServiceProvider);
 export { CarrosServiceProvider };
 //# sourceMappingURL=carros-service.js.map

@@ -35,6 +35,12 @@ var AgendamentoDaoProvider = (function () {
             .then(function () { return agendamentos; });
         return Observable.fromPromise(promise);
     };
+    AgendamentoDaoProvider.prototype.recupera = function (agendamentoId) {
+        var promise = this._storage
+            .get(agendamentoId)
+            .then(function (dado) { return dado ? true : false; });
+        return Observable.fromPromise(promise);
+    };
     return AgendamentoDaoProvider;
 }());
 AgendamentoDaoProvider = __decorate([

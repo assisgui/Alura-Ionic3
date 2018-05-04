@@ -22,6 +22,13 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/of';
 import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento-dao';
+import { LoginPage } from "../pages/login/login";
+import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-service';
+import { ApiServiceProvider } from '../providers/api-service/api-service';
+import { Vibration } from "@ionic-native/vibration";
+import { DatePicker } from "@ionic-native/date-picker";
+import { Camera } from "@ionic-native/camera";
+import { OneSignal } from "@ionic-native/onesignal";
 var AppModule = (function () {
     function AppModule() {
     }
@@ -31,7 +38,8 @@ AppModule = __decorate([
     NgModule({
         declarations: [
             MyApp,
-            HomePage
+            HomePage,
+            LoginPage
         ],
         imports: [
             BrowserModule,
@@ -46,7 +54,8 @@ AppModule = __decorate([
         bootstrap: [IonicApp],
         entryComponents: [
             MyApp,
-            HomePage
+            HomePage,
+            LoginPage
         ],
         providers: [
             StatusBar,
@@ -57,7 +66,13 @@ AppModule = __decorate([
             },
             CarrosServiceProvider,
             AgendamentoServiceProvider,
-            AgendamentoDaoProvider
+            AgendamentoDaoProvider,
+            UsuariosServiceProvider,
+            ApiServiceProvider,
+            Vibration,
+            DatePicker,
+            Camera,
+            OneSignal
         ]
     })
 ], AppModule);

@@ -12,13 +12,17 @@ import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angu
 import { AgendamentoServiceProvider } from "../../providers/agendamento-service/agendamento-service";
 import { HomePage } from "../home/home";
 import { AgendamentoDaoProvider } from "../../providers/agendamento-dao/agendamento-dao";
+import { Vibration } from "@ionic-native/vibration";
+import { DatePicker } from "@ionic-native/date-picker";
 var CadastroPage = (function () {
-    function CadastroPage(navCtrl, navParams, _alertCtrl, _agendamentoService, _agendamentoDao) {
+    function CadastroPage(navCtrl, navParams, _alertCtrl, _agendamentoService, _agendamentoDao, _vibration, _datePicker) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this._alertCtrl = _alertCtrl;
         this._agendamentoService = _agendamentoService;
         this._agendamentoDao = _agendamentoDao;
+        this._vibration = _vibration;
+        this._datePicker = _datePicker;
         this.nome = '';
         this.endereco = '';
         this.email = '';
@@ -29,6 +33,7 @@ var CadastroPage = (function () {
     CadastroPage.prototype.agenda = function () {
         var _this = this;
         if (!this.nome || !this.endereco || !this.email) {
+            this._vibration.vibrate(500);
             this._alertCtrl.create({
                 title: 'Preenchimento obrigatório',
                 subTitle: 'preencha todos os dados',
@@ -60,7 +65,8 @@ var CadastroPage = (function () {
             precoTotal: this.precoTotal,
             confirmado: false,
             enviado: false,
-            data: this.data
+            data: this.data,
+            visualizado: false
         };
         this._agendamentoDao.ehDuplicado(agendamento)
             .mergeMap(function (ehDuplicado) {
@@ -77,7 +83,15 @@ var CadastroPage = (function () {
             return observable;
         })
             .finally(function () { return _this._alerta.setSubTitle(mensagem).present(); })
-            .subscribe(function () { return mensagem = 'Agendamento Realizado!'; }, function (err) { return err.message; });
+            .subscribe(function () { return mensagem = 'Agendamento Realizado!'; }, function (err) { return mensagem = err.message; });
+    };
+    CadastroPage.prototype.selecionaData = function () {
+        var _this = this;
+        this._datePicker.show({
+            date: new Date(),
+            mode: 'date'
+        })
+            .then(function (data) { return _this.data = data.toISOString(); });
     };
     return CadastroPage;
 }());
@@ -91,7 +105,9 @@ CadastroPage = __decorate([
         NavParams,
         AlertController,
         AgendamentoServiceProvider,
-        AgendamentoDaoProvider])
+        AgendamentoDaoProvider,
+        Vibration,
+        DatePicker])
 ], CadastroPage);
 export { CadastroPage };
 //# sourceMappingURL=cadastro.js.map
