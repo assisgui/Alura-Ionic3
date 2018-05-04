@@ -12,7 +12,7 @@ import { HttpClient } from "@angular/common/http";
 var ApiServiceProvider = (function () {
     function ApiServiceProvider(http) {
         this.http = http;
-        this._url = 'http://192.168.1.103:8080/api/';
+        this._url = 'http://10.8.1.110:8080/api/';
     }
     Object.defineProperty(ApiServiceProvider.prototype, "url", {
         get: function () {

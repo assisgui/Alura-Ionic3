@@ -86,4 +86,5 @@
     <engine name="android" spec="~7.0.0" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="onesignal-cordova-plugin" spec="^2.2.5" />
+    <engine name="browser" spec="~5.0.3" />
 </widget>
